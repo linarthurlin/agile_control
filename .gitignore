@@ -1,0 +1,53 @@
+# ==========================================
+# ROS 2 Build & Install Artifacts
+# ==========================================
+ros_ws/build/
+ros_ws/install/
+ros_ws/log/
+
+# ==========================================
+# Python Cache & Testing Files
+# ==========================================
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# ==========================================
+# ROS Logs, Bags, & Databases
+# ==========================================
+.ros/
+log/
+*.bag
+*.db3
+*.mcap
+
+# ==========================================
+# FAST_LIO Logs & Point Cloud Output files
+# ==========================================
+ros_ws/src/fast_lio/Log/*
+ros_ws/src/fast_lio/PCD/*
+# Keep placeholders if any
+!ros_ws/src/fast_lio/Log/.gitkeep
+!ros_ws/src/fast_lio/PCD/.gitkeep
+
+# ==========================================
+# Local Waypoints Outputs
+# ==========================================
+/tmp/waypoints.txt
+ros_ws/src/Nav2/config/waypoints.txt
+
+# ==========================================
+# IDE & System Files
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+
+# ==========================================
+# Docker logs
+# ==========================================
+*.log

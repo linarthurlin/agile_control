@@ -1,0 +1,54 @@
+pacmod_twist_bridge:
+  ros__parameters:
+    cmd_vel_topic: /cmd_vel #/cmd_vel_limited
+    speed_rpt_topic: /pacmod/vehicle_speed_rpt
+
+    accel_cmd_topic: /pacmod/accel_cmd
+    brake_cmd_topic: /pacmod/brake_cmd
+    steer_cmd_topic: /pacmod/steering_cmd
+    shift_cmd_topic: /pacmod/shift_cmd
+
+    cmd_timeout_s: 0.25
+
+    # Stop hold
+    stop_speed_thresh_mps: 0.05
+    stop_brake_hold: 0.80
+
+    # Steering geometry
+    wheelbase_m: 3.4
+    steer_ratio: 16.0
+    max_steer_wheel_rad: 10.8 #10.9 #8.7
+    steer_rate_limit_rad_s: 3.29 #3.0
+    min_speed_for_steer_mps: 0.2
+
+    # Accel PID 
+    kp_accel: 0.40
+    ki_accel: 0.03
+    kd_accel: 0.0
+    accel_i_min: 0.0
+    accel_i_max: 0.30
+
+    # Brake PID 
+    kp_brake: 2.0 #0.90
+    ki_brake: 0.25 #0.03
+    kd_brake: 0.0
+    brake_i_min: 0.0
+    brake_i_max: 0.50
+
+    # Command limits
+    accel_min: 0.30 #0.20999999344348907
+    accel_max: 0.65
+    brake_min: 0.20 # # or 0.00 if your brakes respond well
+    brake_max: 0.75
+
+    # Stiction help
+    stiction_speed_thresh_mps: 0.5
+    accel_stiction_boost: 0.12
+
+    # Slew limits (command units / second)
+    accel_slew_per_s: 0.35
+    brake_slew_per_s: 0.60 # how fast we can braker per second
+
+    # Optional shift
+    send_shift: true
+    shift_gear: 3

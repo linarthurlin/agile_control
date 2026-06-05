@@ -1,0 +1,11 @@
+<CycloneDDS>
+  <Domain>
+    <General>
+      <!-- Bind only to the specified interface -->
+	<Interfaces>
+	     <NetworkInterface name="enp8s0f3"/> 
+	</Interfaces>
+      <AllowMulticast>true</AllowMulticast>
+    </General>
+  </Domain>
+</CycloneDDS>

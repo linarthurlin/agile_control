@@ -1,0 +1,69 @@
+services:
+
+  fast_lio:
+    image: agile_control_ros2
+    container_name: fast_lio
+    network_mode: host
+    ipc: host
+    privileged: true
+    volumes:
+      - /dev:/dev
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /mnt/wslg:/mnt/wslg
+    environment:
+      - ROS_DOMAIN_ID=0
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///etc/cyclonedds.xml
+      - DISPLAY=:0
+      - WAYLAND_DISPLAY=wayland-0
+      - XDG_RUNTIME_DIR=/tmp
+      - PULSE_SERVER=unix:/mnt/wslg/PulseServer
+      - LIBGL_ALWAYS_SOFTWARE=1
+    restart: unless-stopped
+    command: bash -c "
+      source /opt/ros/humble/setup.bash &&
+      source /workspace/ros_ws/install/setup.bash &&
+      ros2 launch fast_lio mapping.launch.py rviz:=true
+      "
+
+  pacmod2:
+    image: agile_control_ros2
+    container_name: pacmod2
+    network_mode: host
+    ipc: host
+    privileged: true
+    volumes:
+      - /dev:/dev
+    environment:
+      - ROS_DOMAIN_ID=0
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///etc/cyclonedds.xml
+    restart: unless-stopped
+    command: ros2 launch pacmod_twist_bridge pacmod2_and_bridge.launch.py
+
+  nav2:
+    image: agile_control_ros2
+    container_name: nav2
+    network_mode: host
+    ipc: host
+    environment:
+      - ROS_DOMAIN_ID=0
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///etc/cyclonedds.xml
+    volumes:
+      - ./ros_ws/src/Nav2/config:/workspace/ros_ws/install/Nav2/share/Nav2/config
+      - ./ros_ws/src/Nav2/launch:/workspace/ros_ws/install/Nav2/share/Nav2/launch
+    restart: unless-stopped
+    command: ros2 launch Nav2 agile_nav2_launch.launch.py
+
+  foxglove:
+    image: agile_control_ros2
+    container_name: foxglove
+    network_mode: host
+    ipc: host
+    environment:
+      - ROS_DOMAIN_ID=0
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///etc/cyclonedds.xml
+    restart: unless-stopped
+    command: ros2 launch foxglove_bridge foxglove_bridge_launch.xml port:=8765
